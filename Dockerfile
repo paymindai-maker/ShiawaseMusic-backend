@@ -4,10 +4,12 @@ WORKDIR /app
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     python3 \
-    python3-pip \
+    python3-venv \
     ffmpeg \
     ca-certificates \
-    && pip3 install --no-cache-dir yt-dlp \
+    && python3 -m venv /opt/yt-dlp-venv \
+    && /opt/yt-dlp-venv/bin/pip install --no-cache-dir --upgrade pip yt-dlp \
+    && ln -s /opt/yt-dlp-venv/bin/yt-dlp /usr/local/bin/yt-dlp \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
