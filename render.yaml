@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: music-backend
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    autoDeploy: true
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: YTDLP_BIN
+        value: yt-dlp
+      - key: YTDLP_JS_RUNTIMES
+        value: node
+      # Optional:
+      # - key: YTDLP_COOKIES_FILE
+      #   value: /etc/secrets/youtube.cookies.txt

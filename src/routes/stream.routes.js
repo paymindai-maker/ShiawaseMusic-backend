@@ -16,7 +16,20 @@ router.get(
     }
 
     const data = await getStreamForVideo(videoId);
-    res.json(data);
+
+    const url = typeof data === "string" ? data : data?.url;
+
+    if (!url) {
+      return res.status(502).json({
+        error: {
+          code: "STREAM_URL_MISSING",
+          message: "Resolved stream URL is missing",
+        },
+      });
+    }
+
+    res.setHeader("Cache-Control", "no-store");
+    return res.redirect(302, url);
   })
 );
 
